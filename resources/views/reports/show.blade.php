@@ -24,7 +24,7 @@
 			<th class="th">Items</th>
 			<th class="th">Order Number</th>
 			<th class="th">Earnings</th>
-			<th class="th">Vendor ID</th>
+			<th class="th">Vendor</th>
 			<th class="th">Order Date</th>
 		</tr>
 	</thead>
@@ -33,7 +33,7 @@
 			<th class="th">Items</th>
 			<th class="th">Order Number</th>
 			<th class="th">Earnings</th>
-			<th class="th">Vendor ID</th>
+			<th class="th">Vendor</th>
 			<th class="th">Order Date</th>
 		</tr>
 	</tfoot>
@@ -47,7 +47,7 @@
 				<td class="td">{{$itemCount}} </td>
 				<td class="td">{{$item->trn_id}} </td>
 				<td class="td">{{$item->debit}} </td>
-				<td class="td">{{$item->vendor_id}} </td>
+				<td class="td">{{$user}} </td>
 				<td class="td">{{date('d M Y',strtotime($item->balance_date))}} </td>
 			</tr>
 			<?php 

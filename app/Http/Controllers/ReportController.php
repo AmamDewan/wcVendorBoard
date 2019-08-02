@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use App\User;
 use Illuminate\Http\Request;
+use Corcel\Model\User as Corcel;
 
 class ReportController extends Controller
 {
@@ -57,7 +59,8 @@ class ReportController extends Controller
          $year = $request->input('year');
         $month = $request->input('month');
         $reports = (new Report)->getSale($year, $month);
-        return view('reports.show', compact('reports','month','year'));
+        $user = Corcel::find(auth()->id())->display_name;
+        return view('reports.show', compact('reports','month','year','user'));
     }
 
     /**
