@@ -56,10 +56,10 @@ class ReportController extends Controller
      */
      public function show(Report $report, Request $request)
     {
-         $year = $request->input('year');
+        $year = $request->input('year');
         $month = $request->input('month');
         $reports = (new Report)->getSale($year, $month);
-        $user = Corcel::find(auth()->id())->display_name;
+        $user = Corcel::find(auth()->id());
         return view('reports.show', compact('reports','month','year','user'));
     }
 

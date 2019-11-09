@@ -14,7 +14,8 @@
         "jgrossi/corcel": "^2.8",
         "laravel/framework": "5.8.*",
         "laravel/telescope": "^2.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "weidner/goutte": "^1.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
