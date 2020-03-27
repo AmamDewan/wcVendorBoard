@@ -14,7 +14,7 @@
 	@else --}}
 	<div class="container">
 		<div class="notification has-text-centered">
-			<p class="title is-3">Monthly Sales Report</p>
+			<p class="title is-3">Your Monthly Sales</p>
 			<p class="title is-4">Vendor Name: {{$user->display_name}}</p>
 			<p class="subtitle is-5">{{date('M Y', strtotime($reports->first()->balance_date))}}</p>
 		</div>
