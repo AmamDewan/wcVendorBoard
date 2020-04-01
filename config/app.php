@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Corcel\Laravel\CorcelServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
