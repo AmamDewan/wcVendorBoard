@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/poster', 'PosterController@index');
 Route::get('/poster/campaign/covid', 'PosterController@getPoster');
+Route::get('/poster/campaign/covid/img', 'PosterController@generate');
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::resource('reports', 'ReportController');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Poster;
 use Illuminate\Http\Request;
+use Anam\PhantomMagick\Converter;
 class PosterController extends Controller
 {
     /**
@@ -39,7 +40,7 @@ class PosterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display poster on webpage.
      *
      * @param  \App\Poster $poster
      * @return \Illuminate\Http\Response
@@ -50,6 +51,25 @@ class PosterController extends Controller
 
         $results = (new Poster)->getinfo();
         return view('poster.covid-poster', compact('results'));
+    }
+
+    /**
+     * Generate image from poster.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function generate()
+    {
+        $options = [
+            'width' => 1200,
+            'height' => 950,
+            'quality' => 90
+        ];
+        $conv = new Converter;
+        $conv->source(url('/poster/campaign/covid'))->toJpg($options)->download('covid.jpg');
+
+        return back();
     }
 
     /**

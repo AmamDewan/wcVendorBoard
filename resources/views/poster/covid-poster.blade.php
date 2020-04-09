@@ -4,6 +4,7 @@
     $max_death_today = 0;
     $max_case_total = 0;
     $max_death_total = 0;
+    $i = 0;
 
 
     function getCode($country){
@@ -239,7 +240,7 @@
             'UG' => 'Uganda',
             'UA' => 'Ukraine',
             'AE' => 'United Arab Emirates',
-            'GB' => 'United Kingdom',
+            'GB' => 'UK',
             'US' => 'USA',
             'UM' => 'United States Outlying Islands',
             'UY' => 'Uruguay',
@@ -297,13 +298,12 @@
     @foreach($results as $result)
 
         <?php
-            //Max case today
+            //Max case today country
         if (intval(substr($result->cases->new, 1)) > $max_case_today && $result->country != 'All'){
-            $max_case_today = intval(substr($result->cases->new, 1));
-            $max_case_today_country = $result->country;
+            $max_case_today_country = $result;
             $max_case_today_country_code = getCode($result->country);
         }
-            //Max death today
+            //Max death today country
         if (intval(substr($result->deaths->new, 1)) > $max_death_today && $result->country != 'All'){
             $max_death_today = intval(substr($result->deaths->new, 1));
             $max_death_today_country = $result->country;
@@ -325,6 +325,9 @@
 
         if($result->country == 'All'){
             $world = $result;
+        }
+        if($result->country == 'Bangladesh'){
+            $bd = $result;
         }
         ?>
 
@@ -349,73 +352,270 @@
             <p class="text-xl font-mono">{{date("D, d F Y")}} | as of {{date("h:i A")}}</p>
         </div>
         <div class="details min-h-full">
-            <div class="grid grid-cols-2 gap-10 p-8 text-center">
-                <div class="pl-5 pr-5">
-                    <h2 class="title text-2xl font-bold mb-4">
-                        Highest Cases Today
-                    </h2>
-                    <div class="flex m-4">
-                        <div class=" flex-initial flag  bg-white rounded-lg overflow-hidden p-3 text-black ml-2">
-{{--                            <span width="150px" height="100px" class="flag-icon flag-icon-"></span>--}}
-                            <img width="150px" src="https://lipis.github.io/flag-icon-css/flags/4x3/{{$max_case_today_country_code}}.svg" alt="Belgium Flag">
-                            <p class="text-2xl pt-2">{{$max_case_today_country}}</p>
-                        </div>
+            <div class="container mx-auto p-4">
+                <!--Start World Data-->
+                <div class="grid grid-cols-4 gap-6 mx-auto text-gray-800">
+                    <div class="col-auto text-center rounded-lg overflow-hidden">
+                        <h1 class="text-2xl font-bold border-b py-2 bg-white">{{number_format($world->cases->new)}}</h1>
+                        <p class="py-3 bg-gray-100">নতুন আক্রান্ত</p>
+                    </div>
+                    <div class="col-auto text-center rounded-lg overflow-hidden">
+                        <h1 class="text-2xl font-bold border-b py-2 bg-white">{{number_format($world->deaths->new)}}</h1>
+                        <p class="py-3 bg-gray-100">নতুন মৃত</p>
+                    </div>
+                    <div class="col-auto text-center rounded-lg overflow-hidden">
+                        <h1 class="text-2xl font-bold border-b py-2 bg-white">{{number_format($world->cases->total)}}</h1>
+                        <p class="py-3 bg-gray-100">মোট আক্রান্ত</p>
+                    </div>
+                    <div class="col-auto text-center rounded-lg overflow-hidden">
+                        <h1 class="text-2xl font-bold border-b py-2 bg-white">{{number_format($world->deaths->total)}}</h1>
+                        <p class="py-3 bg-gray-100">মোট মৃত</p>
+                    </div>
+                </div> <!-- END WORLD DATA -->
+                <!--Table started-->
+                <div class="my-5 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                    <div class="align-middle inline-block min-w-full shadow overflow-hidden rounded-lg border-b border-gray-200">
+                        <table class="min-w-full">
+                            <thead>
+                            <tr>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    দেশ
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    নতুন আক্রান্ত
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    নতুন মৃত
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    মোট আক্রান্ত
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    মোট মৃত
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                            {{-- Bangladesh Statistics--}}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/bd.svg" alt="" class="h-10 w-10 rounded-full object-cover">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm leading-5 font-medium text-gray-900">{{$bd->country}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                    {{number_format($bd->cases->new)}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                    {{number_format($bd->deaths->new)}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                    {{number_format($bd->cases->total)}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                    {{number_format($bd->deaths->total)}}
+                                </td>
+                            </tr> {{--BD statistics ends--}}
+                            @foreach($results as $result)
+                                @if($i>=5)
+                                    <?php break; ?>
+                                @else
 
-                        <div class="flex-auto my-auto">
-                            <p class="text-5xl font-bold ">{{number_format($max_case_today)}}</p>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img src="https://lipis.github.io/flag-icon-css/flags/4x3/{{getCode($result->country)}}.svg" alt="" class="h-10 w-10 rounded-full object-cover">
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">{{$result->country}}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                            {{number_format($result->cases->new)}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                            {{number_format($result->deaths->new)}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                            {{number_format($result->cases->total)}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                            {{number_format($result->deaths->total)}}
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                @endif
+                            @endforeach
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">--}}
+{{--                                    <div class="flex items-center">--}}
+{{--                                        <div class="flex-shrink-0 h-10 w-10">--}}
+{{--                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/it.svg" alt="" class="h-10 w-10 rounded-full object-cover">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="ml-4">--}}
+{{--                                            <div class="text-sm leading-5 font-medium text-gray-900">Italy</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">--}}
+{{--                                    <div class="flex items-center">--}}
+{{--                                        <div class="flex-shrink-0 h-10 w-10">--}}
+{{--                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/gr.svg" alt="" class="h-10 w-10 rounded-full object-cover">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="ml-4">--}}
+{{--                                            <div class="text-sm leading-5 font-medium text-gray-900">Greece</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">--}}
+{{--                                    <div class="flex items-center">--}}
+{{--                                        <div class="flex-shrink-0 h-10 w-10">--}}
+{{--                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/bl.svg" alt="" class="h-10 w-10 rounded-full object-cover">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="ml-4">--}}
+{{--                                            <div class="text-sm leading-5 font-medium text-gray-900">Belgium</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">--}}
+{{--                                    <div class="flex items-center">--}}
+{{--                                        <div class="flex-shrink-0 h-10 w-10">--}}
+{{--                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/in.svg" alt="" class="h-10 w-10 rounded-full object-cover">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="ml-4">--}}
+{{--                                            <div class="text-sm leading-5 font-medium text-gray-900">India</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">--}}
+{{--                                    <div class="flex items-center">--}}
+{{--                                        <div class="flex-shrink-0 h-10 w-10">--}}
+{{--                                            <img src="https://lipis.github.io/flag-icon-css/flags/4x3/bd.svg" alt="" class="h-10 w-10 rounded-full object-cover">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="ml-4">--}}
+{{--                                            <div class="text-sm leading-5 font-medium text-gray-900">Bangladesh</div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg text-bold leading-5 text-gray-800">--}}
+{{--                                    2089--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!--Table END-->
+
+                <!--Start awareness-->
+                <div class="grid grid-cols-4 mx-auto gap-2 my-5">
+                    <div class="col-auto flex item-center">
+                        <div class="flex-shrink-0 h-30 w-30 ">
+                            <img src="http://app.sheideal.com/css/wash_hands.png" alt="" class="rounded-lg h-20 w-20 bg-gray-100 p-2">
+                        </div>
+                        <div class="ml-2">
+                            <div class="text-sm leading-5 font-medium">ঘন ঘন হাত পরিষ্কার করুন। অন্তত ২০ সেকেন্ড সাবান বা হ্যান্ড ওয়াশ ব্যাবহার করুন</div>
                         </div>
                     </div>
-                    <h2 class="title text-2xl font-bold mb-4 mt-10">
-                        Highest Cases Total
-                    </h2>
-                    <div class="flex m-4">
-                        <div class=" flex-initial flag  bg-white rounded-lg overflow-hidden p-3 text-black ml-2">
-                            <img width="150px" src="https://lipis.github.io/flag-icon-css/flags/4x3/{{$max_case_total_country_code}}.svg" alt="Belgium Flag">
-                            <p class="text-2xl pt-2">{{$max_case_total_country}}</p>
+                    <div class="col-auto flex item-center">
+                        <div class="flex-shrink-0 h-30 w-30 ">
+                            <img src="http://app.sheideal.com/css/cough_tissue.png" alt="" class="rounded-lg h-20 w-20 bg-gray-100 p-2">
                         </div>
-
-                        <div class="flex-auto my-auto">
-                            <p class="text-5xl font-bold ">{{number_format($max_case_total)}}</p>
+                        <div class="ml-2">
+                            <div class="text-sm leading-5 font-medium">হাঁচি কাশির সময় টিস্যু ব্যাবহার করুন অথবা হাতের ভাজে হাঁচি-কাশি দিন</div>
                         </div>
                     </div>
-
-                </div> <!--End cases-->
-                <div class="pl-5 pr-5">
-                    <h2 class="title text-2xl font-bold mb-4">
-                        Highest Death Today
-                    </h2>
-                    <div class="flex m-4">
-                        <div class=" flex-initial flag  bg-white rounded-lg overflow-hidden p-3 text-black ml-2">
-                            <img width="150px" src="https://lipis.github.io/flag-icon-css/flags/4x3/{{$max_death_today_country_code}}.svg" alt="Belgium Flag">
-                            <p class="text-2xl pt-2">{{$max_death_today_country}}</p>
+                    <div class="col-auto flex item-center">
+                        <div class="flex-shrink-0 h-30 w-30 ">
+                            <img src="http://app.sheideal.com/css/stay_home.png" alt="" class="rounded-lg h-20 w-20 bg-gray-100 p-2">
                         </div>
-
-                        <div class="flex-auto my-auto">
-                            <p class="text-5xl font-bold ">{{number_format($max_death_today)}}</p>
+                        <div class="ml-2">
+                            <div class="text-sm leading-5 font-medium">খুব প্রয়োজন ছাড়া বাইরে বের হওয়া থেকে বিরত থাকুন। বের হলে মাস্ক ব্যাবহার করুন</div>
                         </div>
                     </div>
-                    <h2 class="title text-2xl font-bold mb-4 mt-10">
-                        Highest Death Total
-                    </h2>
-                    <div class="flex m-4">
-                        <div class=" flex-initial flag  bg-white rounded-lg overflow-hidden p-3 text-black ml-2">
-                            <img width="150px" src="https://lipis.github.io/flag-icon-css/flags/4x3/{{$max_death_total_country_code}}.svg" alt="Belgium Flag">
-                            <p class="text-2xl pt-2">{{$max_death_total_country}}</p>
+                    <div class="col-auto flex item-center">
+                        <div class="flex-shrink-0 h-30 w-30 ">
+                            <img src="http://app.sheideal.com/css/keep_distance.png" alt="" class="rounded-lg h-20 w-20 bg-gray-100 p-2">
                         </div>
-
-                        <div class="flex-auto my-auto">
-                            <p class="text-5xl font-bold ">{{number_format($max_death_total)}}</p>
+                        <div class="ml-2">
+                            <div class="text-sm leading-5 font-medium">সামাজিক দুরুত্ত বজায় রাখুন। একে অপরের অন্তত ২ মিটার বা ৬ ফিট দুরুত্ত বজায় রাখুন</div>
                         </div>
                     </div>
-
-                </div><!--End death-->
+                </div><!--End Awareness-->
             </div>
-            <div class="world">
-                <h2 class="text-4xl text-center">Worldwide Today</h2>
-                <p class="text-xl text-center mt-2">New case: <span class="text-orange-400 font-bold">{{number_format($world->cases->new)}}</span>;   Total Case: <span class="text-orange-400 font-bold">{{number_format($world->cases->total)}}</span>;   New Death: <span class="text-orange-400 font-bold">{{number_format($world->deaths->new)}}</span>;   Total Death: <span class="text-orange-400 font-bold">{{number_format($world->deaths->total)}}</span></p>
-            </div>
 
-            <div class="footer m-3 pt-10 pl-10 pr-10 flex">
+            <div class="footer m-1 pl-10 pr-10 flex">
                 <div class="">
                     <img src="http://app.sheideal.com/css/SheiDeal-logo-lg.png" width="150px" alt="">
                     <p class="text-center logo-link">sheideal.com</p>
