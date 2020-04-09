@@ -1,5 +1,7 @@
 <?php
 
+    date_default_time_zone_set('Asia/Dhaka');
+
     $max_case_today = 0;
     $max_death_today = 0;
     $max_case_total = 0;
