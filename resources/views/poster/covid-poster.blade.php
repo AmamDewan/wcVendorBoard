@@ -1,6 +1,5 @@
 <?php
 
-    date_default_time_zone_set('Asia/Dhaka');
 
     $max_case_today = 0;
     $max_death_today = 0;
@@ -350,8 +349,8 @@
 {{--    <p>New case:{{$world->cases->new}}, Total Case:{{$world->cases->total}}, New Death:{{$world->deaths->new}}, Total Death:{{$world->deaths->total}}</p>--}}
     <div class="card rounded-lg overflow-hidden">
         <div class=" header text-center p-3">
-            <h1 class="font-bold text-4xl">Covid-19 Update</h1>
-            <p class="text-xl font-mono">{{date("D, d F Y")}} | as of {{date("h:i A")}}</p>
+            <h1 class="font-bold text-4xl">আজকের করোনা</h1>
+            <p class="text-xl font-mono">{{date("D, d F Y")}} | {{date("h:i A")}}</p>
         </div>
         <div class="details min-h-full">
             <div class="container mx-auto p-4">
@@ -380,20 +379,20 @@
                         <table class="min-w-full">
                             <thead>
                             <tr>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-base leading-4 font-bold text-gray-800 uppercase tracking-wider">
                                     দেশ
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
-                                    নতুন আক্রান্ত
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-center text-base leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    আজ আক্রান্ত হয়েছেন
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
-                                    নতুন মৃত
+                                <th class="px-6 py-3 border-b border-gray-200 bg-red-300 text-center text-lg leading-4 font-bold text-red-800 uppercase tracking-wider">
+                                    আজ মারা গেছেন
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
-                                    মোট আক্রান্ত
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-center text-lg leading-4 font-bold text-gray-800 uppercase tracking-wider">
+                                    মোট আক্রান্ত হয়েছেন
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-bold text-gray-800 uppercase tracking-wider">
-                                    মোট মৃত
+                                <th class="px-6 py-3 border-b border-gray-200 bg-red-300 text-center text-lg leading-4 font-bold text-red-800 uppercase tracking-wider">
+                                    মোট মারা গেছেন
                                 </th>
                             </tr>
                             </thead>
@@ -406,20 +405,20 @@
                                             <img src="https://lipis.github.io/flag-icon-css/flags/4x3/bd.svg" alt="" class="h-10 w-10 rounded-full object-cover">
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm leading-5 font-medium text-gray-900">{{$bd->country}}</div>
+                                            <div class="text-base leading-5 font-medium text-gray-900">{{$bd->country}}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-gray-800">
                                     {{number_format($bd->cases->new)}}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-red-600">
                                     {{number_format($bd->deaths->new)}}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-gray-800">
                                     {{number_format($bd->cases->total)}}
                                 </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-red-600">
                                     {{number_format($bd->deaths->total)}}
                                 </td>
                             </tr> {{--BD statistics ends--}}
@@ -435,20 +434,20 @@
                                                     <img src="https://lipis.github.io/flag-icon-css/flags/4x3/{{getCode($result->country)}}.svg" alt="" class="h-10 w-10 rounded-full object-cover">
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm leading-5 font-medium text-gray-900">{{$result->country}}</div>
+                                                    <div class="text-base leading-5 font-medium text-gray-900">{{$result->country}}</div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-gray-800">
                                             {{number_format($result->cases->new)}}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-red-600">
                                             {{number_format($result->deaths->new)}}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-gray-800">
                                             {{number_format($result->cases->total)}}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-lg font-bold leading-5 text-gray-800">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-l border-gray-200 text-3xl text-center font-bold leading-5 text-red-600">
                                             {{number_format($result->deaths->total)}}
                                         </td>
                                     </tr>
