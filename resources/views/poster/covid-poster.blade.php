@@ -266,14 +266,14 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Covid poster</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.2.0/tailwind.min.css">
     <style>
         .card{
             background: url("https://zdnet3.cbsistatic.com/hub/i/r/2020/03/17/0ca4097f-c228-4933-8722-bb131d427be7/resize/1200x900/eb74772d5d0699155dbdffdb8c67e0fe/istock-1209822051.jpg");
             background-size:cover;
-            width:1200px;
-            height:950px;
             color:#fff;
         }
         .header{
@@ -287,6 +287,13 @@
         }
         .logo-link{
             letter-spacing: 5px;
+        }
+
+        @media (min-width:1024px) {
+            .card{
+                width:1200px;
+                height: 950px;
+            }
         }
 
     </style>
@@ -347,13 +354,13 @@
 {{--    <p>{{$max_death_total_country}}: {{$max_death_total}}</p>--}}
 {{--    <h2>Worldwide</h2>--}}
 {{--    <p>New case:{{$world->cases->new}}, Total Case:{{$world->cases->total}}, New Death:{{$world->deaths->new}}, Total Death:{{$world->deaths->total}}</p>--}}
-    <div class="card rounded-lg overflow-hidden">
+    <div class="card rounded-lg overflow-hidden sm:w-screen md:w-screen sm:h-screen md:h-screen">
         <div class=" header text-center p-3">
             <h1 class="font-bold text-4xl">আজকের করোনা</h1>
             <p class="text-xl font-mono">{{date("D, d F Y")}} | {{date("h:i A")}}</p>
         </div>
         <div class="details min-h-full">
-            <div class="container mx-auto p-4">
+            <div class="lg:container mx-auto p-4 sm:w-full md:w-full">
                 <!--Start World Data-->
                 <div class="grid grid-cols-4 gap-6 mx-auto text-gray-800">
                     <div class="col-auto text-center rounded-lg overflow-hidden">
@@ -374,7 +381,7 @@
                     </div>
                 </div> <!-- END WORLD DATA -->
                 <!--Table started-->
-                <div class="my-5 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                <div class="my-5 overflow-x-auto lg:-mx-8 lg:px-8">
                     <div class="align-middle inline-block min-w-full shadow overflow-hidden rounded-lg border-b border-gray-200">
                         <table class="min-w-full">
                             <thead>
@@ -580,7 +587,7 @@
                 </div><!--Table END-->
 
                 <!--Start awareness-->
-                <div class="grid grid-cols-4 mx-auto gap-2 my-5">
+                <div class="grid grid-cols-4 sm:grid-cols-2 mx-auto gap-2 my-5">
                     <div class="col-auto flex item-center">
                         <div class="flex-shrink-0 h-30 w-30 ">
                             <img src="http://app.sheideal.com/css/wash_hands.png" alt="" class="rounded-lg h-20 w-20 bg-gray-100 p-2">
